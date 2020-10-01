@@ -1,0 +1,49 @@
+enum PriorityEnum {
+  high
+  medium
+  low
+}
+
+type Todo {
+  id: String
+  timestamp: String!
+  priority: PriorityEnum!
+  note: String!
+  done: Boolean
+}
+
+input TodoFilterInput {
+  from: String
+  to: String
+  priority: PriorityEnum
+  note: String
+  done: Boolean
+}
+
+enum SortEnum {
+  asc
+  desc
+}
+
+input OrderByInput {
+  orderByField: String!
+  order: SortEnum!
+}
+
+"""
+Subscriptions
+"""
+type Subscription {
+  # todos subscribes to a real-time, paginated list of todos matching the
+  # filtering criteria
+  todos(filter: TodoFilterInput, skip: Int!, limit: Int!, orderBy: OrderByInput!): [Todo!]!
+}
+
+
+"""
+Mutations
+"""
+type Mutation {
+  newTodo(todo: Todo): String
+  modifyDone(id: String, done: Boolean): String
+}

@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+  server:
+    build:
+      context: ./server
+      network: host
+    container_name: server
+    env_file: ./server/.env
+    depends_on:
+      - db
+    links:
+      - db
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules/
+    ports:
+      - "5000:5000"
+      - "8080:8080"
+    command: ["npm", "run", "start"]
+
+  client:
+    build:
+      context: ./client
+      network: host
+    container_name: client
+    env_file: ./client/.env
+    stdin_open: true # https://github.com/facebook/create-react-app/issues/8688#issuecomment-602110747
+    depends_on:
+      - server
+    links:
+      - server
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules/
+    ports:
+      - "3000:3000"
+    command: ["npm", "run", "start"]
+
+  db:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_DATABASE=todos
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
