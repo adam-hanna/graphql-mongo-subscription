@@ -22,7 +22,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "noUnusedLocals": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "types": [
       "node"
     ],

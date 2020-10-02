@@ -5,11 +5,16 @@ enum PriorityEnum {
 }
 
 type Todo {
-  id: String
+  _id: String
   timestamp: String!
   priority: PriorityEnum!
   note: String!
   done: Boolean
+}
+
+input NewTodo {
+  priority: PriorityEnum!
+  note: String!
 }
 
 input TodoFilterInput {
@@ -30,13 +35,21 @@ input OrderByInput {
   order: SortEnum!
 }
 
+
+"""
+Query
+"""
+type Query {
+  dummy: String
+}
+
 """
 Subscriptions
 """
 type Subscription {
   # todos subscribes to a real-time, paginated list of todos matching the
   # filtering criteria
-  todos(filter: TodoFilterInput, skip: Int!, limit: Int!, orderBy: OrderByInput!): [Todo!]!
+  todos(filter: TodoFilterInput!, skip: Int!, limit: Int!, orderBy: OrderByInput!): [Todo!]!
 }
 
 
@@ -44,6 +57,6 @@ type Subscription {
 Mutations
 """
 type Mutation {
-  newTodo(todo: Todo): String
-  modifyDone(id: String, done: Boolean): String
+  newTodo(todo: NewTodo!): Todo!
+  modifyDone(id: String!, done: Boolean!): Todo
 }

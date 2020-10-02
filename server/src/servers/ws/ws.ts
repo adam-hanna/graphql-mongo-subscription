@@ -1,8 +1,7 @@
-require('dotenv').config()
 import { createServer } from 'http';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { execute, subscribe } from 'graphql';
-import { schema } from '../../../data';
+import { execSchema } from '../../../data';
 
 // Create WebSocket listener server
 export const websocketServer = createServer((request, response) => {
@@ -12,7 +11,7 @@ export const websocketServer = createServer((request, response) => {
 
 export const subscriptionServer = SubscriptionServer.create(
   {
-    schema,
+    schema: execSchema,
     execute,
     subscribe,
   },

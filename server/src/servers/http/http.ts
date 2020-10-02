@@ -33,8 +33,10 @@ httpServer.use(
     schema,
     rootValue: {
       ...resolvers.Query,
+      ...resolvers.Mutation,
+      ...resolvers.Subscription,
     },
     graphiql: true,
     pretty: true,
   }),
-);
+);graphQLHTTP
