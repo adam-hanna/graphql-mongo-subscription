@@ -9,11 +9,8 @@ import {
 const subscription = graphql`
   subscription subscriptionSubscription(
     $filter: TodoFilterInput!
-    $skip: Int!
-    $limit: Int!
-    $orderBy: OrderByInput!
   ) {
-    todos(filter: $filter, skip: $skip, limit: $limit, orderBy: $orderBy) {
+    todosChanged(filter: $filter) {
       _id
       timestamp
       priority
@@ -26,12 +23,6 @@ const subscription = graphql`
 // TODO
 const variables = {
   filter: {},
-  skip: 0,
-  limit: 10,
-  orderBy: {
-    orderByField: "_id",
-    order: "desc",
-  },
 };
 
 // @ts-ignore

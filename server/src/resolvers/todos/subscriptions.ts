@@ -5,7 +5,7 @@ import changeStreamToAsyncIterator from '../../pubsub'
 //import changeStreamToAsyncIterator from 'change-stream-to-async-iterator'
 
 export const subscriptions = {
-  todos: {
+  todosChanged: {
     // @ts-ignore
     subscribe: (parent, args, context, info): AsyncIterator<any> => {
       console.log('args', args)
@@ -17,7 +17,7 @@ export const subscriptions = {
         }
       ],
       {
-
+        fullDocument : "updateLookup"
       })
     },
     // @ts-ignore

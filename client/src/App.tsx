@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import {
-  PriorityEnum,
   Table,
-  Todo,
 } from './table'
 import {
   Filter,
@@ -11,30 +9,6 @@ import {
 import {
   NewTodo,
 } from './newTodo'
-
-const fakeTodos: Todo[] = [
-  {
-    _id: "3",
-    timestamp: (new Date()).toLocaleString(),
-    priority: PriorityEnum.high,
-    note: "foo",
-    done: false,
-  },
-  {
-    _id: "2",
-    timestamp: (new Date((new Date()).setDate((new Date()).getDate()-1))).toLocaleString(),
-    priority: PriorityEnum.medium,
-    note: "bar",
-    done: false,
-  },
-  {
-    _id: "1",
-    timestamp: (new Date((new Date()).setDate((new Date()).getDate()-2))).toLocaleString(),
-    priority: PriorityEnum.low,
-    note: "baz",
-    done: true,
-  },
-]
 
 function App() {
   const [orderBy, setOrderBy] = useState("_id")
@@ -56,7 +30,6 @@ function App() {
     >
       <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
         <Table 
-          todos={fakeTodos}
           setOrderByCol={orderByCol}
         />
         <Filter 

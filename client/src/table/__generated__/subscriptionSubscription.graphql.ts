@@ -4,32 +4,25 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type PriorityEnum = "high" | "low" | "medium" | "%future added value";
-export type SortEnum = "asc" | "desc" | "%future added value";
 export type TodoFilterInput = {
     from?: string | null;
     to?: string | null;
     priority?: PriorityEnum | null;
     note?: string | null;
     done?: boolean | null;
-};
-export type OrderByInput = {
-    orderByField: string;
-    order: SortEnum;
+    refetch?: boolean | null;
 };
 export type subscriptionSubscriptionVariables = {
     filter: TodoFilterInput;
-    skip: number;
-    limit: number;
-    orderBy: OrderByInput;
 };
 export type subscriptionSubscriptionResponse = {
-    readonly todos: ReadonlyArray<{
+    readonly todosChanged: {
         readonly _id: string | null;
         readonly timestamp: string;
         readonly priority: PriorityEnum;
         readonly note: string;
         readonly done: boolean | null;
-    }>;
+    };
 };
 export type subscriptionSubscription = {
     readonly response: subscriptionSubscriptionResponse;
@@ -41,11 +34,8 @@ export type subscriptionSubscription = {
 /*
 subscription subscriptionSubscription(
   $filter: TodoFilterInput!
-  $skip: Int!
-  $limit: Int!
-  $orderBy: OrderByInput!
 ) {
-  todos(filter: $filter, skip: $skip, limit: $limit, orderBy: $orderBy) {
+  todosChanged(filter: $filter) {
     _id
     timestamp
     priority
@@ -56,27 +46,14 @@ subscription subscriptionSubscription(
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "filter"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "limit"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "orderBy"
-},
-v3 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "skip"
-},
-v4 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "filter"
+  }
+],
+v1 = [
   {
     "alias": null,
     "args": [
@@ -84,27 +61,12 @@ v4 = [
         "kind": "Variable",
         "name": "filter",
         "variableName": "filter"
-      },
-      {
-        "kind": "Variable",
-        "name": "limit",
-        "variableName": "limit"
-      },
-      {
-        "kind": "Variable",
-        "name": "orderBy",
-        "variableName": "orderBy"
-      },
-      {
-        "kind": "Variable",
-        "name": "skip",
-        "variableName": "skip"
       }
     ],
     "concreteType": "Todo",
     "kind": "LinkedField",
-    "name": "todos",
-    "plural": true,
+    "name": "todosChanged",
+    "plural": false,
     "selections": [
       {
         "alias": null,
@@ -147,40 +109,30 @@ v4 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/),
-      (v3/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "subscriptionSubscription",
-    "selections": (v4/*: any*/),
+    "selections": (v1/*: any*/),
     "type": "Subscription",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v3/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "subscriptionSubscription",
-    "selections": (v4/*: any*/)
+    "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "9acebf18cae75106923c215be23968d8",
+    "cacheID": "deecc8c04ce076c7b8bc2ed5512061f1",
     "id": null,
     "metadata": {},
     "name": "subscriptionSubscription",
     "operationKind": "subscription",
-    "text": "subscription subscriptionSubscription(\n  $filter: TodoFilterInput!\n  $skip: Int!\n  $limit: Int!\n  $orderBy: OrderByInput!\n) {\n  todos(filter: $filter, skip: $skip, limit: $limit, orderBy: $orderBy) {\n    _id\n    timestamp\n    priority\n    note\n    done\n  }\n}\n"
+    "text": "subscription subscriptionSubscription(\n  $filter: TodoFilterInput!\n) {\n  todosChanged(filter: $filter) {\n    _id\n    timestamp\n    priority\n    note\n    done\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd22f03e8de7f4d054c072f3ceaf89064';
+(node as any).hash = '9d001d53329a1d56fa74e2488a7658b9';
 export default node;

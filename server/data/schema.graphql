@@ -23,6 +23,8 @@ input TodoFilterInput {
   priority: PriorityEnum
   note: String
   done: Boolean
+
+  refetch: Boolean # note: This is a cheater var to force refetch
 }
 
 enum SortEnum {
@@ -40,7 +42,7 @@ input OrderByInput {
 Query
 """
 type Query {
-  dummy: String
+  todos(filter: TodoFilterInput!, skip: Int!, limit: Int!, orderBy: OrderByInput!): [Todo!]!
 }
 
 """
@@ -49,7 +51,7 @@ Subscriptions
 type Subscription {
   # todos subscribes to a real-time, paginated list of todos matching the
   # filtering criteria
-  todos(filter: TodoFilterInput!, skip: Int!, limit: Int!, orderBy: OrderByInput!): [Todo!]!
+  todosChanged(filter: TodoFilterInput!): Todo!
 }
 
 
